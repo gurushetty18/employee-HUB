@@ -1,10 +1,11 @@
 package com.Employee.employHub.service;
 
 import java.util.Optional;
+import java.util.Random;
 
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.Employee.employHub.dto.RegisterRequest;
 import com.Employee.employHub.entity.User;
 import com.Employee.employHub.repository.UserRepository;
@@ -13,12 +14,18 @@ import com.Employee.employHub.repository.UserRepository;
 public class UserService {
 
 	private final UserRepository repository;
+	private final JavaMailSender javaMailSender;
 	
-	public UserService(UserRepository repository) {
-		super();
+	
+
+	public UserService(UserRepository repository, JavaMailSender javaMailSender) {
 		this.repository = repository;
+		this.javaMailSender = javaMailSender;
 	}
 
+
+
+	//user registration
 	public Object Registration(RegisterRequest request) {
 		Optional<User> op = repository.findByEmail(request.getEmail());
 		if (op.isPresent()) {
@@ -36,6 +43,26 @@ public class UserService {
 		}
 		
 		
+		
+		
 	}
+	
+	
+	
+	 // OTP generator
+    private String otpGeneration() {
+        Random random = new Random();
+        return String.format("%06d", random.nextInt(999999));
+    }
+
+    // Send OTP email
+    private void sendMail(String toEmail, String otp) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Verification OTP");
+        message.setText("Your OTP is: " + otp + "\nIt is valid for 5 minutes.");
+        javaMailSender.send(message);
+    }
+	
 	
 }
