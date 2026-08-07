@@ -1,5 +1,7 @@
 package com.Employee.employHub.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,8 +30,13 @@ public class User {
 	
 	@Size(min = 6 , max = 12)
 	private String password;
+
 	
 	private String role;
+	
+	private String otp;
+	
+	private LocalDateTime otpExpire;
 	
 	private boolean varify;
 }

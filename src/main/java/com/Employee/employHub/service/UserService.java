@@ -1,5 +1,6 @@
 package com.Employee.employHub.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.Employee.employHub.dto.RegisterRequest;
 import com.Employee.employHub.entity.User;
 import com.Employee.employHub.repository.UserRepository;
+import com.Employee.employHub.util.OtpGenerator;
 
 @Service
 public class UserService {
@@ -17,12 +19,14 @@ public class UserService {
 	private final JavaMailSender javaMailSender;
 	
 	
+	
+
+	
 
 	public UserService(UserRepository repository, JavaMailSender javaMailSender) {
 		this.repository = repository;
 		this.javaMailSender = javaMailSender;
 	}
-
 
 
 	//user registration
@@ -38,6 +42,11 @@ public class UserService {
 			user.setEmail(request.getEmail());
 			user.setPassword(request.getPassword());
 			user.setRole("user");
+			String otp = OtpGenerator.otpGenerate();
+			user.setOtp(otp);
+			
+			user.setOtpExpire(LocalDateTime.now().plusMinutes(5));
+			
 			user.setVarify(false);
 			return "otp sent to "+request.getEmail();
 		}
@@ -46,7 +55,6 @@ public class UserService {
 		
 		
 	}
-	
 	
 	
 	 // OTP generator
@@ -63,6 +71,8 @@ public class UserService {
         message.setText("Your OTP is: " + otp + "\nIt is valid for 5 minutes.");
         javaMailSender.send(message);
     }
+    
+   
 	
 	
 }
