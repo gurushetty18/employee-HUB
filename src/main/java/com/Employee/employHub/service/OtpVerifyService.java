@@ -18,7 +18,7 @@ public class OtpVerifyService {
 		this.userRepository = userRepository;
 	}
 
-	public String name(VerifyOtpRequest otpRequest) {
+	public String VerifyUser(VerifyOtpRequest otpRequest) {
 		Optional<User> optional = userRepository.findByEmail(otpRequest.getEmail());
 		if (optional.isPresent()) {
 			User user = optional.get();

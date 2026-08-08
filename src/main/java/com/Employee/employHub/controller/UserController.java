@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Employee.employHub.dto.RegisterRequest;
+import com.Employee.employHub.dto.VerifyOtpRequest;
+import com.Employee.employHub.service.OtpVerifyService;
 import com.Employee.employHub.service.UserService;
 
 @RestController
@@ -13,15 +15,24 @@ import com.Employee.employHub.service.UserService;
 public class UserController {
 
 	private final UserService userservice;
-
-	public UserController(UserService service) {
-		this.userservice = service;
-	}
+	private final OtpVerifyService otpVerifyService;
 
 	
-	@PostMapping
+
+	
+	public UserController(UserService userservice, OtpVerifyService otpVerifyService) {
+		this.userservice = userservice;
+		this.otpVerifyService = otpVerifyService;
+	}
+
+	@PostMapping("/register")
 	public Object Registration(@RequestBody RegisterRequest request) {
 		return userservice.Registration(request);
 		
+	}
+	
+	@PostMapping("/verify")
+	public String VerifyUser(@RequestBody VerifyOtpRequest otpRequest) {
+		return otpVerifyService.VerifyUser(otpRequest);
 	}
 }
