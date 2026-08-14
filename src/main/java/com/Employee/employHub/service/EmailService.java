@@ -18,6 +18,6 @@ public class EmailService {
 		message.setTo(toEmail);
 		message.setSubject("employeeHub Registration Varification");
 		message.setText("Your varification otp code is : "+otp);
-		javaMailSender.send(message);
+		 javaMailSender.send(message);
 	}
 }

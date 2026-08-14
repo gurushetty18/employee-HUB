@@ -3,6 +3,7 @@ package com.Employee.employHub.config;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -25,7 +26,8 @@ public class Securityconfig {
 		csrf(csrf->csrf.disable()).
 		authorizeHttpRequests(auth-> auth.
 				requestMatchers("/users/register","/users/verify").permitAll().
-				requestMatchers("/users/**").authenticated(). 
+				requestMatchers(HttpMethod.GET,"/employees**").hasAnyRole("ADMIN","USER").
+				requestMatchers("/employees/**").hasRole("ADMIN").
 				anyRequest().authenticated()).
 		httpBasic(Customizer.withDefaults());
 		
