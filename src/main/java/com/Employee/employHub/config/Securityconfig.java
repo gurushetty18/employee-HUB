@@ -25,7 +25,7 @@ public class Securityconfig {
 		httpSecurity.
 		csrf(csrf->csrf.disable()).
 		authorizeHttpRequests(auth-> auth.
-				requestMatchers("/users/register","/users/verify").permitAll().
+				requestMatchers("/users/register","/users/verify","/users/resend/{email}").permitAll().
 				requestMatchers(HttpMethod.GET,"/employees**").hasAnyRole("ADMIN","USER").
 				requestMatchers("/employees/**").hasRole("ADMIN").
 				anyRequest().authenticated()).

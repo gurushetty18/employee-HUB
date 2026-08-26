@@ -27,8 +27,12 @@ public class OtpVerifyService {
 				return " invalid otp";
 			}
 			if (LocalDateTime.now().isAfter(user.getOtpExpire())) {
-				return "otp expired";
+			    user.setOtp(null);
+			    user.setOtpExpire(null);
+			    userRepository.save(user);
+			    return "OTP expired. Please request a new one.";
 			}
+
 			
 			else {
 				user.setVarify(true);

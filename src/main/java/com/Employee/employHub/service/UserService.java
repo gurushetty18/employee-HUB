@@ -38,7 +38,7 @@ public class UserService {
 
 			String otp = OtpGenerator.otpGenerate();
 			user.setOtp(otp);
-			user.setOtpExpire(LocalDateTime.now().plusMinutes(5));
+			user.setOtpExpire(LocalDateTime.now().plusMinutes(1));
 			user.setVarify(false);
 
 			// --- MISSING STEP: SAVE TO DATABASE ---
