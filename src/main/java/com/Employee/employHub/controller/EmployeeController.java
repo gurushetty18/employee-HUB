@@ -32,8 +32,8 @@ public class EmployeeController {
         return employeeService.createEmployee(employee);
     }
 
-    @GetMapping("/{email}")
-    public Employee fetchByEmail(@PathVariable String email) {
+    @GetMapping("/{Empemail}")
+    public Employee fetchByEmail(@PathVariable String Empemail) {
         return employeeService.fetchById(email);
     }
 
